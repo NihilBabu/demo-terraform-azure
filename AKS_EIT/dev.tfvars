@@ -1,4 +1,4 @@
-subscription_id="00f6033c-f8c8-44a1-8d2f-ab4d561931ed"
+subscription_id=""
 
 addional_tags = {
   "Environment" : "dev"
@@ -16,65 +16,65 @@ subnet_list = {
 app_gw_subnet = "agw-un-dev-01"
 aks_subnet = "aks-un-dev-01"
 
-app_gw = {
+# app_gw = {
 
-  ssl_certificate = {
+#   ssl_certificate = {
  
-  }
+#   }
 
-  frontend_port = {
-    port-80  = 80
-    # port-443 = 443
-  }
+#   frontend_port = {
+#     port-80  = 80
+#     # port-443 = 443
+#   }
 
-  backend_address_pool = {
-    "test"      = ["10.224.2.9"]
-  }
+#   backend_address_pool = {
+#     "test"      = ["10.224.2.9"]
+#   }
 
-  health_prob = {
-    "test" = {
-      protocol = "Http"
-      path     = "/"
-    }
-  }
+#   health_prob = {
+#     "test" = {
+#       protocol = "Http"
+#       path     = "/"
+#     }
+#   }
 
-  http_settings = {
-    "test" = {
-      port            = 80
-      protocol        = "Http"
-      request_timeout = 60
-      probe_name      = "test"
-      host_name       = ""
-    }
-  }
+#   http_settings = {
+#     "test" = {
+#       port            = 80
+#       protocol        = "Http"
+#       request_timeout = 60
+#       probe_name      = "test"
+#       host_name       = ""
+#     }
+#   }
 
-  https_listener = {
+#   https_listener = {
   
-  }
+#   }
 
-  http_listener = {
-    "test" = {
-      frontend_ip_configuration_name = "public"
-      frontend_port_name             = "port-80"
-      protocol                       = "Http"
-      host_names                     = ["test.abc.com"]
-    }
-  }
+#   http_listener = {
+#     "test" = {
+#       frontend_ip_configuration_name = "public"
+#       frontend_port_name             = "port-80"
+#       protocol                       = "Http"
+#       host_names                     = ["test.abc.com"]
+#     }
+#   }
 
-  redirect_configuration = {
-  }
+#   redirect_configuration = {
+#   }
 
-  routing_rule = {
-    "frontend-uat-https" = {
-      http_listener_name         = "test"
-      backend_address_pool_name  = "test"
-      backend_http_settings_name = "test"
-      priority                   = 10
-    }
-  }
-  redirect_routing_rule = {
-  }
-}
+#   routing_rule = {
+#     "frontend-uat-https" = {
+#       http_listener_name         = "test"
+#       backend_address_pool_name  = "test"
+#       backend_http_settings_name = "test"
+#       priority                   = 10
+#     }
+#   }
+#   redirect_routing_rule = {
+#   }
+# }
 
 
 route_tables = {

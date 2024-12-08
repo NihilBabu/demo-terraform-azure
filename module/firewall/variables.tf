@@ -17,7 +17,7 @@ variable "location" {
 }
 
 variable "sku_tier" {
-  default = "Premium"
+  default = "Standard"
   type    = string
 }
 variable "subnet_id" {

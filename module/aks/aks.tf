@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   private_cluster_enabled = true
   dns_prefix              = var.name
   node_resource_group     = var.node_resource_group
-  local_account_disabled  = true
+  # local_account_disabled  = true
 
   network_profile {
     network_plugin    = "azure"
@@ -19,25 +19,23 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   default_node_pool {
-    name                = "default"
-    enable_auto_scaling = true
-    tags                = var.tags
-    max_count           = 2
-    min_count           = 1
-    availability_zones  = var.availability_zones
-    vm_size             = "Standard_DS2_v2"
-    vnet_subnet_id      = var.cluster_subnet_id
+    name                 = "default"
+    tags                 = var.tags
+    max_count            = 2
+    min_count            = 1
+    auto_scaling_enabled = true
+    vm_size              = "Standard_DS2_v2"
+    vnet_subnet_id       = var.cluster_subnet_id
   }
 
   identity {
     type = "SystemAssigned"
   }
 
-  azure_active_directory_role_based_access_control {
-    managed                = true
-    admin_group_object_ids = var.admin_group_id
-    azure_rbac_enabled     = true
-  }
+  # azure_active_directory_role_based_access_control {
+  #   # admin_group_object_ids = var.admin_group_id
+  #   azure_rbac_enabled     = true
+  # }
 
   lifecycle {
     ignore_changes = [
@@ -54,7 +52,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "example" {
   node_count            = 1
   max_count             = var.node_max_count
   min_count             = var.node_min_count
-  enable_auto_scaling   = true
+  auto_scaling_enabled  = true
   mode                  = "User"
   vnet_subnet_id        = var.cluster_subnet_id
   tags                  = var.tags

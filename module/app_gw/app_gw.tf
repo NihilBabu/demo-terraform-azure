@@ -6,7 +6,7 @@ resource "azurerm_public_ip" "main" {
   allocation_method   = "Static"
   tags                = var.tags
   sku                 = "Standard"
-  availability_zone   = "No-Zone"
+  zones               = ["1", "2", "3"]
 }
 
 
@@ -84,7 +84,7 @@ resource "azurerm_application_gateway" "main" {
     for_each = var.ssl_certificate
     content {
       name                = ssl_certificate.key
-      key_vault_secret_id = ssl_certificate.value.key_vault_secret_id
+      data                = filebase64(ssl_certificate.value.data)
     }
   }
 

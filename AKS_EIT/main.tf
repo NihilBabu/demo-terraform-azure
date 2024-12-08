@@ -2,15 +2,8 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.99.0"
+      version = "4.13.0"
     }
-  }
-  backend "azurerm" {
-    resource_group_name  = "rg-shared-un-p-01"
-    storage_account_name = "saaksappuntf01"
-    container_name       = "aks-eit-tf"
-    key                  = "terraform.tfstate"
-    subscription_id      = "1bde07cf-02b6-4c27-9431-1ab1f2f2306d"
   }
 }
 
@@ -56,34 +49,34 @@ module "subnet" {
   address_prefixes = each.value
 }
 
-module "agw" {
-  source                 = "../module/app_gw"
-  name                   = "${local.name.prefix.agw_name}-01"
-  resource_group         = module.resource_group.name
-  tags                   = merge(var.tags, var.addional_tags)
-  location               = var.location
-  public_ip_name         = "pip-aksapp-un-${substr(terraform.workspace, 0, 1)}-01"
-  appname                = var.appname
-  # subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-agw-un-dev-01"
-  # subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-agw-un-prd-01"
-  subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-${var.app_gw_subnet}"
-  sku_name               = "WAF_v2"
-  tier                   = "WAF_v2"
-  capacity               = 1
-  public_listener        = true
-  frontend_port          = var.app_gw.frontend_port
-  backend_address_pool   = var.app_gw.backend_address_pool
-  health_prob            = var.app_gw.health_prob
-  http_settings          = var.app_gw.http_settings
-  https_listener         = var.app_gw.https_listener
-  http_listener          = var.app_gw.http_listener
-  redirect_configuration = var.app_gw.redirect_configuration
-  routing_rule           = var.app_gw.routing_rule
-  redirect_routing_rule  = var.app_gw.redirect_routing_rule
-  depends_on = [
-    module.subnet
-  ]
-}
+# module "agw" {
+#   source                 = "../module/app_gw"
+#   name                   = "${local.name.prefix.agw_name}-01"
+#   resource_group         = module.resource_group.name
+#   tags                   = merge(var.tags, var.addional_tags)
+#   location               = var.location
+#   public_ip_name         = "pip-aksapp-un-${substr(terraform.workspace, 0, 1)}-01"
+#   appname                = var.appname
+#   # subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-agw-un-dev-01"
+#   # subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-agw-un-prd-01"
+#   subnet_id              = "/subscriptions/${var.subscription_id}/resourceGroups/${module.resource_group.name}/providers/Microsoft.Network/virtualNetworks/${module.vnet.name}/subnets/snet-${var.app_gw_subnet}"
+#   sku_name               = "WAF_v2"
+#   tier                   = "WAF_v2"
+#   capacity               = 1
+#   public_listener        = true
+#   frontend_port          = var.app_gw.frontend_port
+#   backend_address_pool   = var.app_gw.backend_address_pool
+#   health_prob            = var.app_gw.health_prob
+#   http_settings          = var.app_gw.http_settings
+#   https_listener         = var.app_gw.https_listener
+#   http_listener          = var.app_gw.http_listener
+#   redirect_configuration = var.app_gw.redirect_configuration
+#   routing_rule           = var.app_gw.routing_rule
+#   redirect_routing_rule  = var.app_gw.redirect_routing_rule
+#   depends_on = [
+#     module.subnet
+#   ]
+# }
 
 module "aks" {
   source              = "../module/aks"
